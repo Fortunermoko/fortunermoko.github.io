@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>雲心（もこ）｜御殿場 対面占い</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #08060f;
+  --bg2: #100b1e;
+  --bg3: #18102c;
+  --purple: #9b72f0;
+  --purple-dark: #5c34b0;
+  --purple-light: #cbbeff;
+  --gold: #c9962a;
+  --gold-light: #e8b84b;
+  --gold-pale: #f5dea0;
+  --text: #ede8fc;
+  --muted: #9080b8;
+  --border: rgba(155,114,240,0.22);
+  --card: rgba(20,13,38,0.92);
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Serif JP', serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* 背景 */
+.bg-stars {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(1px 1px at 8% 12%, rgba(255,255,255,0.65) 0%,transparent 100%),
+    radial-gradient(1px 1px at 22% 45%, rgba(255,255,255,0.4) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 48% 8%, rgba(255,255,255,0.7) 0%,transparent 100%),
+    radial-gradient(1px 1px at 68% 55%, rgba(255,255,255,0.35) 0%,transparent 100%),
+    radial-gradient(1px 1px at 83% 22%, rgba(255,255,255,0.5) 0%,transparent 100%),
+    radial-gradient(1px 1px at 18% 78%, rgba(255,255,255,0.45) 0%,transparent 100%),
+    radial-gradient(1px 1px at 57% 82%, rgba(255,255,255,0.3) 0%,transparent 100%),
+    radial-gradient(1px 1px at 38% 60%, rgba(200,180,255,0.5) 0%,transparent 100%),
+    radial-gradient(1px 1px at 91% 68%, rgba(200,180,255,0.35) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 13% 50%, rgba(200,180,255,0.55) 0%,transparent 100%),
+    radial-gradient(1px 1px at 74% 33%, rgba(255,220,120,0.3) 0%,transparent 100%),
+    radial-gradient(1px 1px at 5% 90%, rgba(255,255,255,0.3) 0%,transparent 100%),
+    radial-gradient(1px 1px at 95% 10%, rgba(255,255,255,0.4) 0%,transparent 100%);
+}
+.bg-glow {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 15%, rgba(92,52,176,0.13) 0%,transparent 70%),
+    radial-gradient(ellipse 60% 60% at 85% 85%, rgba(60,25,130,0.1) 0%,transparent 70%),
+    radial-gradient(ellipse 50% 40% at 55% 45%, rgba(155,114,240,0.05) 0%,transparent 70%);
+}
+
+/* レイアウト */
+.wrap { position: relative; z-index: 1; max-width: 480px; margin: 0 auto; }
+
+/* ヘッダービジュアル */
+.hero {
+  text-align: center;
+  padding: 56px 20px 40px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.hero-ornament {
+  font-family: 'Cinzel', serif;
+  font-size: 10px; letter-spacing: 0.35em;
+  color: var(--gold); margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+}
+.hero-ornament::before, .hero-ornament::after {
+  content: ''; display: block; width: 40px; height: 1px; background: var(--gold); opacity: 0.5;
+}
+.hero-circle {
+  width: 100px; height: 100px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(155,114,240,0.35), rgba(20,13,38,0.9));
+  border: 1px solid rgba(155,114,240,0.45);
+  margin: 0 auto 18px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 46px;
+  box-shadow: 0 0 28px rgba(92,52,176,0.3), inset 0 0 20px rgba(155,114,240,0.1);
+}
+.hero-en {
+  font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.3em;
+  color: var(--gold-light); margin-bottom: 6px;
+}
+.hero h1 {
+  font-size: 28px; font-weight: 700; color: var(--text);
+  letter-spacing: 0.12em; margin-bottom: 4px;
+}
+.hero-sub {
+  font-size: 13px; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 18px;
+}
+.hero-tags {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 20px;
+}
+.tag {
+  padding: 4px 12px; border-radius: 20px;
+  background: rgba(155,114,240,0.12); border: 1px solid rgba(155,114,240,0.3);
+  font-size: 11px; color: var(--purple-light); letter-spacing: 0.06em;
+}
+.hero-stats {
+  display: flex; justify-content: center; gap: 24px;
+}
+.stat { text-align: center; }
+.stat-num {
+  font-family: 'Cinzel', serif; font-size: 22px; color: var(--gold-light);
+  font-weight: 600; letter-spacing: 0.05em;
+}
+.stat-label { font-size: 10px; color: var(--muted); margin-top: 2px; letter-spacing: 0.08em; }
+
+/* セクション共通 */
+.section { padding: 36px 20px; border-bottom: 1px solid var(--border); }
+.sec-head {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 22px;
+}
+.sec-head-en {
+  font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.25em;
+  color: var(--gold); line-height: 1;
+}
+.sec-head-ja { font-size: 18px; font-weight: 700; color: var(--text); line-height: 1.2; }
+.sec-head-line { flex: 1; height: 1px; background: var(--border); }
+
+/* 自己紹介 */
+.intro-text {
+  font-size: 14px; line-height: 2.0; color: var(--text);
+}
+.intro-text p + p { margin-top: 1em; }
+.highlight { color: var(--gold-light); font-weight: 500; }
+
+/* 占術カード */
+.service-cards { display: flex; flex-direction: column; gap: 14px; }
+.scard {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 18px 18px 16px;
+  display: flex; gap: 14px; align-items: flex-start;
+  backdrop-filter: blur(6px);
+}
+.scard-icon {
+  width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
+  background: rgba(155,114,240,0.14); border: 1px solid rgba(155,114,240,0.3);
+  display: flex; align-items: center; justify-content: center; font-size: 22px;
+}
+.scard-body {}
+.scard-name { font-size: 15px; font-weight: 500; color: var(--purple-light); margin-bottom: 5px; }
+.scard-desc { font-size: 12px; color: var(--muted); line-height: 1.75; }
+
+/* こんな方に */
+.concern-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.concern-list li {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 13px 16px;
+  font-size: 13px; line-height: 1.7; color: var(--text);
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.concern-list li::before {
+  content: '✦'; color: var(--gold); font-size: 11px; margin-top: 3px; flex-shrink: 0;
+}
+
+/* 料金 */
+.price-cards { display: flex; flex-direction: column; gap: 14px; }
+.pcard {
+  background: var(--card); border-radius: 14px; padding: 20px;
+  position: relative; overflow: hidden;
+}
+.pcard.main {
+  border: 1px solid rgba(201,150,42,0.5);
+}
+.pcard.sub {
+  border: 1px solid var(--border);
+}
+.pcard-badge {
+  position: absolute; top: 14px; right: 14px;
+  background: rgba(201,150,42,0.15); border: 1px solid rgba(201,150,42,0.4);
+  color: var(--gold-light); font-size: 10px; padding: 3px 10px; border-radius: 20px;
+  letter-spacing: 0.08em;
+}
+.pcard-time { font-size: 13px; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 4px; }
+.pcard-price {
+  font-family: 'Cinzel', serif; font-size: 28px; color: var(--gold-light);
+  font-weight: 600; margin-bottom: 8px; letter-spacing: 0.03em;
+}
+.pcard-price span { font-size: 15px; font-weight: 400; }
+.pcard-desc { font-size: 12px; color: var(--muted); line-height: 1.7; }
+.pcard-note {
+  margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);
+  font-size: 11px; color: var(--muted); line-height: 1.6;
+}
+
+/* 場所・時間 */
+.info-block {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 18px 18px; margin-bottom: 14px;
+}
+.info-block-title {
+  font-size: 12px; color: var(--gold); letter-spacing: 0.12em; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.info-block-title::before {
+  content: ''; display: block; width: 3px; height: 14px;
+  background: var(--gold); border-radius: 2px;
+}
+.schedule-grid {
+  display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; align-items: center;
+}
+.sch-day {
+  font-size: 13px; color: var(--purple-light); font-weight: 500; letter-spacing: 0.05em;
+}
+.sch-time { font-size: 13px; color: var(--text); }
+.privacy-note {
+  margin-top: 12px; padding: 10px 12px;
+  background: rgba(155,114,240,0.07); border-radius: 8px;
+  font-size: 11px; color: var(--muted); line-height: 1.7;
+}
+
+/* 申し込みフロー */
+.flow-steps { display: flex; flex-direction: column; gap: 0; }
+.fstep {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding-bottom: 20px; position: relative;
+}
+.fstep:last-child { padding-bottom: 0; }
+.fstep:not(:last-child)::after {
+  content: ''; position: absolute; left: 17px; top: 36px; bottom: 0;
+  width: 1px; background: var(--border);
+}
+.fstep-num {
+  width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+  background: rgba(92,52,176,0.25); border: 1px solid rgba(155,114,240,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cinzel', serif; font-size: 13px; color: var(--purple-light); font-weight: 600;
+}
+.fstep-body { padding-top: 4px; }
+.fstep-title { font-size: 14px; color: var(--text); font-weight: 500; margin-bottom: 4px; }
+.fstep-desc { font-size: 12px; color: var(--muted); line-height: 1.7; }
+
+/* CTAボタン */
+.cta-section { padding: 36px 20px 60px; text-align: center; }
+.cta-message { font-size: 13px; color: var(--muted); line-height: 1.9; margin-bottom: 24px; }
+.btn-cta {
+  display: block; width: 100%; padding: 16px;
+  background: linear-gradient(135deg, var(--purple-dark), #3d1e90);
+  border: 1px solid var(--purple); border-radius: 12px;
+  color: var(--purple-light); font-size: 16px; font-family: 'Noto Serif JP', serif;
+  font-weight: 500; letter-spacing: 0.12em; cursor: pointer;
+  text-decoration: none; margin-bottom: 12px;
+  box-shadow: 0 4px 20px rgba(92,52,176,0.35);
+}
+.cta-note { font-size: 11px; color: var(--muted); line-height: 1.8; }
+.cta-safety {
+  display: flex; flex-direction: column; gap: 6px; margin-top: 18px;
+  background: rgba(155,114,240,0.06); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px 16px;
+}
+.safety-item { font-size: 11px; color: var(--muted); display: flex; gap: 8px; align-items: flex-start; }
+.safety-item::before { content: '✓'; color: var(--purple-light); flex-shrink: 0; font-weight: 500; }
+
+/* フッター */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 20px; text-align: center;
+}
+.footer-name { font-size: 15px; color: var(--text); letter-spacing: 0.1em; margin-bottom: 4px; }
+.footer-area { font-size: 11px; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 12px; }
+.footer-copy { font-size: 10px; color: rgba(144,128,184,0.5); letter-spacing: 0.05em; }
+
+/* アニメーション */
+@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+.hero-circle { animation: fadeUp 0.7s ease both; }
+.hero h1 { animation: fadeUp 0.7s 0.1s ease both; }
+</style>
+</head>
+<body>
+<div class="bg-stars"></div>
+<div class="bg-glow"></div>
+
+<div class="wrap">
+
+  <!-- ヒーロー -->
+  <div class="hero">
+    <div class="hero-ornament">FORTUNE TELLER</div>
+    <div class="hero-circle">🔮</div>
+    <div class="hero-en">UNSIN MOKO</div>
+    <h1>雲心（もこ）</h1>
+    <p class="hero-sub">御殿場・対面占い鑑定師</p>
+    <div class="hero-tags">
+      <span class="tag">タロットカード</span>
+      <span class="tag">九星気学</span>
+      <span class="tag">手相</span>
+      <span class="tag">御殿場駅近</span>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">6,000<span style="font-size:14px">+</span></div>
+        <div class="stat-label">延べ鑑定人数</div>
+      </div>
+      <div class="stat" style="border-left:1px solid var(--border);border-right:1px solid var(--border);padding:0 24px;">
+        <div class="stat-num">5</div>
+        <div class="stat-label">年の鑑定歴</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">対面</div>
+        <div class="stat-label">カフェ鑑定</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 自己紹介 -->
+  <div class="section">
+    <div class="sec-head">
+      <div>
+        <div class="sec-head-en">ABOUT</div>
+        <div class="sec-head-ja">ごあいさつ</div>
+      </div>
+      <div class="sec-head-line"></div>
+    </div>
+    <div class="intro-text">
+      <p>はじめまして。占い師の<span class="highlight">「雲心（もこ）」</span>と申します。</p>
+      <p>プロとして<span class="highlight">鑑定歴5年・延べ6,000人以上</span>の対面・オンライン鑑定を行ってまいりました。</p>
+      <p>この度、地域の皆様のお悩みや、一歩踏み出すきっかけをお手伝いしたく、<span class="highlight">地元密着のカフェ対面鑑定</span>をスタートいたしました。</p>
+      <p>SNSなどはやっておりませんが、その分、目の前のお客様一人ひとりと誠実に向き合い、小手先ではない<span class="highlight">本格的な鑑定</span>をお届けします。</p>
+    </div>
+  </div>
+
+  <!-- 占術 -->
+  <div class="section">
+    <div class="sec-head">
+      <div>
+        <div class="sec-head-en">SERVICES</div>
+        <div class="sec-head-ja">占術のご紹介</div>
+      </div>
+      <div class="sec-head-line"></div>
+    </div>
+    <div class="service-cards">
+      <div class="scard">
+        <div class="scard-icon">🂠</div>
+        <div class="scard-body">
+          <div class="scard-name">タロットカード</div>
+          <div class="scard-desc">近い未来の展開・相手の気持ち・具体的な選択の吉凶を読み解きます。直感的なメッセージを丁寧にお伝えします。</div>
+        </div>
+      </div>
+      <div class="scard">
+        <div class="scard-icon">☯</div>
+        <div class="scard-body">
+          <div class="scard-name">九星気学</div>
+          <div class="scard-desc">生まれ持った運勢・バイオリズム・引っ越しや吉方位など、人生の大きな流れを読み解きます。</div>
+        </div>
+      </div>
+      <div class="scard">
+        <div class="scard-icon">✋</div>
+        <div class="scard-body">
+          <div class="scard-name">手相</div>
+          <div class="scard-desc">現在の運気・資質・健康状態・才能の開花時期を手のひらから読み解きます。</div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin-top:14px;text-align:center;letter-spacing:0.05em;">※お悩みに合わせて占術を組み合わせてご鑑定いたします</p>
+  </div>
+
+  <!-- こんな方に -->
+  <div class="section">
+    <div class="sec-head">
+      <div>
+        <div class="sec-head-en">FOR YOU</div>
+        <div class="sec-head-ja">こんな方におすすめ</div>
+      </div>
+      <div class="sec-head-line"></div>
+    </div>
+    <ul class="concern-list">
+      <li>仕事の人間関係や、今後のキャリアで悩んでいる</li>
+      <li>家族・恋愛・パートナーシップの深い悩みがある</li>
+      <li>プロにじっくり話を聴いてもらい、軌道修正したい</li>
+      <li>ネットの簡易的な占いではなく、本格的な対面鑑定を受けたい</li>
+      <li>誰にも言えない悩みを、安心できる場所で相談したい</li>
+      <li>これからの方向性をハッキリさせたい</li>
+    </ul>
+  </div>
+
+  <!-- 料金 -->
+  <div class="section">
+    <div class="sec-head">
+      <div>
+        <div class="sec-head-en">PRICE</div>
+        <div class="sec-head-ja">料金・メニュー</div>
+      </div>
+      <div class="sec-head-line"></div>
+    </div>
+    <div class="price-cards">
+      <div class="pcard main">
+        <div class="pcard-badge">人気</div>
+        <div class="pcard-time">60分</div>
+        <div class="pcard-price">¥5,000<span>（税込）</span></div>
+        <div class="pcard-desc">お悩みを深く掘り下げる総合鑑定。複数の占術を組み合わせて、じっくりと向き合います。</div>
+        <div class="pcard-note">※ご自身の飲食代は各自でのご負担をお願いいたします</div>
+      </div>
+      <div class="pcard sub">
+        <div class="pcard-time">30分</div>
+        <div class="pcard-price">¥3,000<span>（税込）</span></div>
+        <div class="pcard-desc">要点をお伝えするショート鑑定。特定のテーマに絞ってお答えします。</div>
+        <div class="pcard-note">※ご自身の飲食代は各自でのご負担をお願いいたします</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 場所・受付 -->
+  <div class="section">
+    <div class="sec-head">
+      <div>
+        <div class="sec-head-en">ACCESS &amp; SCHEDULE</div>
+        <div class="sec-head-ja">場所・受付日時</div>
+      </div>
+      <div class="sec-head-line"></div>
+    </div>
+    <div class="info-block">
+      <div class="info-block-title">鑑定場所</div>
+      <p style="font-size:14px;color:var(--text);margin-bottom:8px;">📍 御殿場駅近くの喫茶店</p>
+      <p style="font-size:12px;color:var(--muted);line-height:1.7;">（ご予約時にお伝えします。JR御殿場線・御殿場駅より徒歩圏内）</p>
+      <div class="privacy-note">
+        プライバシーに配慮し、パーテーションのある席や落ち着いた奥まった席をご用意します。安心してお話しいただけます。
+      </div>
+    </div>
+    <div class="info-block">
+      <div class="info-block-title">受付日時</div>
+      <div class="schedule-grid">
+        <div class="sch-day">月・火・金</div>
+        <div class="sch-time">16:00 以降</div>
+        <div class="sch-day">水</div>
+        <div class="sch-time">10:00 〜 16:00</div>
+        <div class="sch-day">土・日</div>
+        <div class="sch-time">応相談</div>
+      </div>
+      <div class="privacy-note" style="margin-top:10px;">
+        ご希望の時間帯はご相談のうえ調整いたします。まずはお気軽にご連絡ください。
+      </div>
+    </div>
+  </div>
+
+  <!-- 申し込み方法 -->
+  <div class="section">
+    <div class="sec-head">
+      <div>
+        <div class="sec-head-en">HOW TO APPLY</div>
+        <div class="sec-head-ja">お申し込み方法</div>
+      </div>
+      <div class="sec-head-line"></div>
+    </div>
+    <div class="flow-steps">
+      <div class="fstep">
+        <div class="fstep-num">1</div>
+        <div class="fstep-body">
+          <div class="fstep-title">ジモティーから問い合わせ</div>
+          <div class="fstep-desc">ジモティーの「問い合わせ」ボタンからご連絡ください。（会員登録・ログインが必要です）</div>
+        </div>
+      </div>
+      <div class="fstep">
+        <div class="fstep-num">2</div>
+        <div class="fstep-body">
+          <div class="fstep-title">以下をお伝えください</div>
+          <div class="fstep-desc">
+            ① ご希望のメニュー（30分 または 60分）<br>
+            ② ご希望の日時（第3希望まで）<br>
+            ③ お悩みの概要（簡単で結構です　例：転職について、など）
+          </div>
+        </div>
+      </div>
+      <div class="fstep">
+        <div class="fstep-num">3</div>
+        <div class="fstep-body">
+          <div class="fstep-title">日時・場所の確定</div>
+          <div class="fstep-desc">折り返しご連絡の上、鑑定場所（喫茶店名）をお伝えします。</div>
+        </div>
+      </div>
+      <div class="fstep">
+        <div class="fstep-num">4</div>
+        <div class="fstep-body">
+          <div class="fstep-title">当日・対面鑑定</div>
+          <div class="fstep-desc">喫茶店にて、ゆっくりと丁寧に鑑定いたします。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <p class="cta-message">「誰にも言えない悩みがある」<br>「これからの方向性をハッキリさせたい」<br><br>そんな方、ぜひ一度お気軽にご相談ください。</p>
+    <a href="https://jmty.jp/" class="btn-cta" target="_blank">✦ ジモティーから申し込む ✦</a>
+    <p class="cta-note">※ジモティーの会員登録・ログインが必要です</p>
+    <div class="cta-safety">
+      <div class="safety-item">お伺いした個人情報・秘密は厳守いたします</div>
+      <div class="safety-item">物品の物販は一切ございません</div>
+      <div class="safety-item">特定の宗教・勧誘などは一切ございません</div>
+      <div class="safety-item">女性鑑定師が丁寧に対応いたします</div>
+    </div>
+  </div>
+
+  <!-- フッター -->
+  <footer>
+    <div class="footer-name">雲心（もこ）</div>
+    <div class="footer-area">御殿場市 新橋 / JR御殿場線 御殿場駅近</div>
+    <div class="footer-copy">© 雲心（もこ）占い鑑定</div>
+  </footer>
+
+</div>
+</body>
+</html>
